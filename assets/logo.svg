@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Coolify MCP">
-  <rect width="128" height="128" rx="28" fill="#0B1220"/>
-  <rect x="28" y="36" width="72" height="56" rx="12" fill="none" stroke="#6EE7B7" stroke-width="6"/>
-  <circle cx="64" cy="64" r="14" fill="#38BDF8"/>
-  <path d="M48 96h32" stroke="#6EE7B7" stroke-width="6" stroke-linecap="round"/>
-  <path d="M56 102h16" stroke="#38BDF8" stroke-width="5" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Coolify">
+  <rect width="200" height="200" rx="40" fill="#0B0B12"/>
+  <g transform="translate(28,28) scale(0.409)">
+    <path d="M64 256v32H32v-32zm0 0V96h32v160ZM96 96V64h224V32h32v64Zm224 192h32v64H96v-32h224z" fill="#452e72"/>
+    <path d="M64 256H0V64h64Zm0-192V0h256v64Zm0 192h256v64H64Z" fill="#864ffc"/>
+  </g>
 </svg>
