@@ -1,37 +1,33 @@
 # Install on Grok Bot / Cursor agents
 
-Coolify MCP is **remote Streamable HTTP**. There is no local npm package to run.
+Coolify MCP is a remote Streamable HTTP server on your Coolify instance. This plugin does not ship a local package to run.
 
-Do not paste API tokens into chats when you can use a secret field or plugin variables.
+Put `COOLIFY_API_TOKEN` in a secret field or a plugin variable. The two setting names are `COOLIFY_BASE_URL` and `COOLIFY_API_TOKEN`. Full Cursor install steps are in the [README](./README.md).
 
 ## AddMcpServer (remote)
 
 | Field | Value |
 | --- | --- |
-| name | `coolify` (or `coolify-staging` / `coolify-production` for multiple teams) |
-| url | `https://YOUR-COOLIFY-DOMAIN/mcp` |
-| headers | `Authorization`: `Bearer YOUR_TEAM_API_TOKEN` |
+| name | `coolify`, or a distinct name such as `coolify-staging` / `coolify-production` when you add more than one team |
+| url | The origin in `COOLIFY_BASE_URL`, plus the path `/mcp` |
+| headers | Header name `Authorization`. Value is the `Bearer` scheme and the `COOLIFY_API_TOKEN` secret |
 
-Example shape:
-
-```json
-{
-  "url": "https://YOUR-COOLIFY-DOMAIN/mcp",
-  "headers": {
-    "Authorization": "Bearer YOUR_TEAM_API_TOKEN"
-  }
-}
-```
+AddMcpServer takes that resolved URL and header. It does not read `.cursor-plugin/plugin.json`. The plugin file `mcp.json` is the place that uses the placeholders `${COOLIFY_BASE_URL}` and `${COOLIFY_API_TOKEN}`. A project or user `mcp.json` that reads the shell uses `${env:COOLIFY_BASE_URL}` and `${env:COOLIFY_API_TOKEN}` instead.
 
 ## Multiple Coolify teams
 
-API tokens are **team-scoped**. For staging and production (or any two teams), add **two** MCP servers with different names/labels and different tokens. Same base URL is fine if both teams live on one instance.
+An API token is team-scoped. For two teams, add two MCP servers with different names and different tokens. The same `COOLIFY_BASE_URL` is fine when both teams are on one instance.
 
 ## Verify
 
-Ask the agent to call `get_current_team` or `get_infrastructure_overview`. Confirm the team matches the token you installed.
+Ask the agent to call `get_current_team` or `get_infrastructure_overview`. The team should be the one bound to that token. A token limited to selected projects, environments, or resources does not receive `get_current_team`.
 
 ## Permissions
 
-- `read` — inspect resources
-- `deploy` — only if the agent must trigger deployments / lifecycle tools
+| Ability | When to add it |
+| --- | --- |
+| `read` | Inspect resources |
+| `read:sensitive` | Log summaries and `get_env_values` |
+| `deploy` | Deploy, start, stop, restart, cancel, rollback |
+| `write` | Create or update resources |
+| `delete` | Delete resources |
